@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f0f8ff, #e0f7fa); /* Gradient background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #4CAF50; /* Green background */
+            border-bottom: 3px solid #388E3C; /* Darker green border */
+            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+            font-size: 2em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate; /* Separate borders for more styling control */
+            border-spacing: 0;
+            overflow-x: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Larger shadow for more emphasis */
+            border-radius: 10px; /* Rounded corners */
+            background: #ffffff; /* White background for table */
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease; /* Smooth shadow transition */
+        }
+
+        table:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd; /* Bottom border for better separation */
+        }
+
+        th {
+            background-color: #4CAF50; /* Green background for header */
+            color: white;
+            font-weight: bold;
+            border-top: 1px solid #388E3C; /* Darker green top border */
+        }
+
+        td {
+            background-color: #ffffff; /* White background for data cells */
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9f9f9; /* Very light grey background for even rows */
+        }
+
+        tr:hover td {
+            background-color: #e2e2e2; /* Light grey background on hover */
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            th, td {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            th, td {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            table {
+                font-size: 12px;
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Users</h1>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here by the script -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('use.php')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#userTable tbody');
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        for (const key in row) {
+                            const td = document.createElement('td');
+                            td.textContent = row[key];
+                            tr.appendChild(td);
+                        }
+                        tableBody.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+</body>
+</html>
